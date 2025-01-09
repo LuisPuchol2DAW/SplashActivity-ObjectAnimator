@@ -35,43 +35,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         startStuff(savedInstanceState);
 
-        // Referencias a las vistas
         TextView firstTextView = findViewById(R.id.firstTextView);
         TextView secondTextView = findViewById(R.id.secondTextView);
-        TextView thirdTextView = findViewById(R.id.thirdTextView);
+        TableLayout table = findViewById(R.id.imageTableLayout);
 
-        Animation fade1 = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        firstTextView.startAnimation(fade1);
+        startFadeInAnimation(firstTextView, R.anim.fade_in);
+        applyTableRowAnimations(table, R.anim.custom_anim);
+        startFadeInWithListener(secondTextView, R.anim.fade_in2);
+    }
 
+    private void startFadeInAnimation(TextView textView, int animationResource) {
+        Animation fadeAnimation = AnimationUtils.loadAnimation(this, animationResource);
+        textView.startAnimation(fadeAnimation);
+    }
 
-        Animation spinin = AnimationUtils.loadAnimation(this, R.anim.custom_anim);
-        LayoutAnimationController controller = new LayoutAnimationController(spinin);
-        TableLayout table = (TableLayout) findViewById(R.id.imageTableLayout);
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow row = (TableRow) table.getChildAt(i);
+    private void applyTableRowAnimations(TableLayout tableLayout, int animationRes) {
+        Animation rowAnimation = AnimationUtils.loadAnimation(this, animationRes);
+        LayoutAnimationController controller = new LayoutAnimationController(rowAnimation);
+        for (int i = 0; i < tableLayout.getChildCount(); i++) {
+            TableRow row = (TableRow) tableLayout.getChildAt(i);
             row.setLayoutAnimation(controller);
         }
+    }
 
-        Animation fade2 = AnimationUtils.loadAnimation(this, R.anim.fade_in2);
-        fade2.setAnimationListener(new Animation.AnimationListener() {
+    private void startFadeInWithListener(TextView textView, int animationRes) {
+        Animation fadeAnimation = AnimationUtils.loadAnimation(this, animationRes);
+        fadeAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                //Vacio
             }
 
+            @Override
             public void onAnimationEnd(Animation animation) {
                 startActivity(new Intent(MainActivity.this, EmptyActivity.class));
-                MainActivity.this.finish();
+                finish();
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                //Vacio
             }
         });
-
-        secondTextView.startAnimation(fade2);
-
+        textView.startAnimation(fadeAnimation);
     }
 
     public void startStuff(Bundle savedInstanceState) {
