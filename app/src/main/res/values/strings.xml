@@ -3,4 +3,10 @@
     <string name="titulo_1">Titulo 1</string>
     <string name="titulo_2">Titulo 2</string>
     <string name="cosas_copyright">Cosas Copyright</string>
+    <string-array name="list_items">
+        <item>Botón 1</item>
+        <item>Botón 2</item>
+        <item>Botón 3</item>
+        <item>Botón 4</item>
+    </string-array>
 </resources>
